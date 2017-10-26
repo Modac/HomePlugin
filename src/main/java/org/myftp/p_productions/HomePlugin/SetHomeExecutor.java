@@ -1,6 +1,5 @@
 package org.myftp.p_productions.HomePlugin;
 
-//import static org.myftp.p_productions.HomePlugin.Messages.getPrefix;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -24,7 +23,7 @@ public class SetHomeExecutor implements CommandExecutor {
 	
 	private static void printUsage(CommandSender sender, String label){
 		if(sender instanceof Player)
-			Arrays.stream(usage.split("\n")).forEach(line->sender.sendMessage(Messages.getPrefix()+String.format(line,label)));
+			Arrays.stream(usage.split("\n")).forEach(line->sender.sendMessage(Messages.getInstance().getPrefix()+String.format(line,label)));
 	}
 	
 	@Override
@@ -38,25 +37,25 @@ public class SetHomeExecutor implements CommandExecutor {
 			
 			try {
 				Location loc = setHome(player, args.length==1?Integer.valueOf(args[0]):1);
-				player.sendMessage(String.format(Messages.getSetHomeCmdSuccess(),loc.getX(), loc.getY(), loc.getZ(), loc.getWorld().getName()));
+				player.sendMessage(String.format(Messages.getInstance().getSetHomeCmdSuccess(),loc.getX(), loc.getY(), loc.getZ(), loc.getWorld().getName()));
 			} catch (IOException e) {
 				e.printStackTrace();
-				sender.sendMessage(Messages.getSetHomeCmdFail());
+				sender.sendMessage(Messages.getInstance().getSetHomeCmdFail());
 			} catch (NumberFormatException e) {
 				printUsage(sender, label);
 			} catch (HomeNumberOutOfBoundsException e) {
-				sender.sendMessage(Messages.getHomeNumberOutOfBounds(true));
+				sender.sendMessage(Messages.getInstance().getHomeNumberOutOfBounds(true));
 			}
 			
 			return true;
 		} else {
-			sender.sendMessage(Messages.getSetHomeCmdNoPlayerSender());
+			sender.sendMessage(Messages.getInstance().getSetHomeCmdNoPlayerSender());
 			return true;
 		}
 	}
 	
 	public Location setHome(Player player, int number) throws IOException, HomeNumberOutOfBoundsException{
-		if(number > Home.getMaxHomes() || number <= 0) throw new HomeNumberOutOfBoundsException();
+		if(number > plugin.getMaxHomes() || number <= 0) throw new HomeNumberOutOfBoundsException();
 		
 		plugin.homeData.set(String.format(Home.lastNamePath,player.getUniqueId()), player.getName());
 		

@@ -33,7 +33,7 @@ public class GetHomesExecutor implements CommandExecutor {
 			us = usage;
 			color[0] = true;
 		}
-		Arrays.stream(us.split("\n")).forEach(line->sender.sendMessage(Messages.getPrefix(color[0])+String.format(line,label)));
+		Arrays.stream(us.split("\n")).forEach(line->sender.sendMessage(Messages.getInstance().getPrefix(color[0])+String.format(line,label)));
 	}
 
 	
@@ -44,47 +44,47 @@ public class GetHomesExecutor implements CommandExecutor {
 			try {
 				OfflinePlayer player = (OfflinePlayer) sender;
 				int setHomes=0;
-				for (int i=1; i<=Home.getMaxHomes(); i++) {
+				for (int i=1; i<=plugin.getMaxHomes(); i++) {
 					try {
-						sender.sendMessage(Messages.getGetHomeCmdSuccess4Self(i, player.getName(), getHome(player, i)));
+						sender.sendMessage(Messages.getInstance().getGetHomeCmdSuccess4Self(i, player.getName(), getHome(player, i)));
 						setHomes++;
 					} catch(NoHomeFoundException nhfe) { //just continue
 					}
 				}
-				if(setHomes==0) sender.sendMessage(Messages.getGetHomeCmdNoHomeFound4Self());
+				if(setHomes==0) sender.sendMessage(Messages.getInstance().getGetHomeCmdNoHomeFound4Self());
 			} catch (NumberFormatException e) {
-				sender.sendMessage(Messages.getHomeNumberNoNumber(true));
+				sender.sendMessage(Messages.getInstance().getHomeNumberNoNumber(true));
 				printUsage(sender, label);
 			} catch (HomeNumberOutOfBoundsException e) {
-				sender.sendMessage(Messages.getHomeNumberOutOfBounds(true));
+				sender.sendMessage(Messages.getInstance().getHomeNumberOutOfBounds(true));
 			}
 			return true;
 		} else {
 			if(args.length<1) {
-				sender.sendMessage(String.format(Messages.getGetHomeCmdMissingPlayer(false), label));
+				sender.sendMessage(String.format(Messages.getInstance().getGetHomeCmdMissingPlayer(false), label));
 				printUsage(sender, label);
 				return true;
 			}
 			
 			OfflinePlayer player;
 			if((player=plugin.getServer().getOfflinePlayer(args[0]))==null){
-				sender.sendMessage(Messages.getGetHomeCmdPlayerNotFound(false));
+				sender.sendMessage(Messages.getInstance().getGetHomeCmdPlayerNotFound(false));
 			}else{
 				try {
 					int setHomes=0;
-					for (int i=1; i<=Home.getMaxHomes(); i++) {
+					for (int i=1; i<=plugin.getMaxHomes(); i++) {
 						try {
-							sender.sendMessage(Messages.getGetHomeCmdSuccess4Other(i, player.getName(), getHome(player, i), false));
+							sender.sendMessage(Messages.getInstance().getGetHomeCmdSuccess4Other(i, player.getName(), getHome(player, i), false));
 							setHomes++;
 						} catch(NoHomeFoundException nhfe) { //just continue
 						}
-						if(setHomes==0) sender.sendMessage(Messages.getGetHomeCmdNoHomeFound4Self());
+						if(setHomes==0) sender.sendMessage(Messages.getInstance().getGetHomeCmdNoHomeFound4Self());
 					}
 				} catch (NumberFormatException e) {
-					sender.sendMessage(Messages.getHomeNumberNoNumber(false));
+					sender.sendMessage(Messages.getInstance().getHomeNumberNoNumber(false));
 					printUsage(sender, label);
 				} catch (HomeNumberOutOfBoundsException e) {
-					sender.sendMessage(Messages.getHomeNumberOutOfBounds(false));
+					sender.sendMessage(Messages.getInstance().getHomeNumberOutOfBounds(false));
 				}
 			}
 			return true;

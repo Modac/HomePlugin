@@ -25,7 +25,7 @@ public class GoHomeExecutor implements CommandExecutor {
 
 	private static void printUsage(CommandSender sender, String label){
 		if(sender instanceof Player)
-			Arrays.stream(usage.split("\n")).forEach(line->sender.sendMessage(Messages.getPrefix()+String.format(line,label)));
+			Arrays.stream(usage.split("\n")).forEach(line->sender.sendMessage(Messages.getInstance().getPrefix()+String.format(line,label)));
 	}
 	
 	@Override
@@ -39,7 +39,7 @@ public class GoHomeExecutor implements CommandExecutor {
 			try{
 				sender.sendMessage(goHome(player, args.length==1?Integer.valueOf(args[0]):1));
 			} catch(NumberFormatException e){
-				sender.sendMessage(Messages.getHomeNumberNoNumber(true));
+				sender.sendMessage(Messages.getInstance().getHomeNumberNoNumber(true));
 			}
 			return true;
 		} else {
@@ -58,9 +58,9 @@ public class GoHomeExecutor implements CommandExecutor {
 		try {
 			loc = GetHomeExecutor.getHome(plugin, player, number);
 		} catch (NoHomeFoundException e) {
-			return Messages.getGetHomeCmdNoHomeFound4Self();
+			return Messages.getInstance().getGetHomeCmdNoHomeFound4Self();
 		} catch (HomeNumberOutOfBoundsException e) {
-			return Messages.getHomeNumberOutOfBounds(true);
+			return Messages.getInstance().getHomeNumberOutOfBounds(true);
 		}
 		
 		// TODO: move to Messages

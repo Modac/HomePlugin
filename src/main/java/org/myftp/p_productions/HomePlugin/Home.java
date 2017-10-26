@@ -5,14 +5,19 @@ import java.io.File;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.myftp.p_productions.HomePlugin.SimpleConfig.SimpleConfig;
+import org.myftp.p_productions.HomePlugin.SimpleConfig.SimpleConfigManager;
 
 public class Home extends JavaPlugin {
 	
 	private static String filename="homes.yml";
 	static String lastNamePath="%s.LastName";
 	static String homePath="%s.Home%d";
-	static int maxHomes=3;
-	
+	int maxHomes;
+
+	public SimpleConfigManager manager;
+	public SimpleConfig config;
+
 	FileConfiguration homeData;
 	File dataFile;
 	
@@ -24,7 +29,10 @@ public class Home extends JavaPlugin {
 	@Override
 	public void onEnable() {
 
-		saveDefaultConfig();
+		Messages.getInstance().init(this);
+
+		initDefaultConfig();
+		loadConfig();
 
 		getCommand("sethome").setExecutor(new SetHomeExecutor(this));
 		getCommand("home").setExecutor(new GoHomeExecutor(this));
@@ -33,18 +41,32 @@ public class Home extends JavaPlugin {
 		getCommand("delhome").setExecutor(new DelHomeExecutor(this));
 
 
-		getLogger().info(Messages.getPluginActivated(false));
+		getLogger().info(Messages.getInstance().getPluginActivated(false));
 	}
-	
+
+	private void initDefaultConfig() {
+
+		this.manager = new SimpleConfigManager(this);
+		this.manager.prepareFile("config.yml", "config.yml");
+		this.config = manager.getNewConfig("config.yml");
+		this.config.saveConfig();
+
+	}
+
+	private void loadConfig() {
+		maxHomes = this.config.getInt("maxHomes");
+
+	}
+
 	@Override
 	public void onDisable() {
 		
-		getLogger().info(Messages.getPluginDeactivated(false));
+		getLogger().info(Messages.getInstance().getPluginDeactivated(false));
 
-		saveConfig();
+		this.config.saveConfig();
 	}
 	
-	public static int getMaxHomes(){
+	public int getMaxHomes(){
 		return maxHomes;
 	}
 }

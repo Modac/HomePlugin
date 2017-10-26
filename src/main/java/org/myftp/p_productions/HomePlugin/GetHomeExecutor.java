@@ -33,7 +33,7 @@ public class GetHomeExecutor implements CommandExecutor {
 			us = usage;
 			color[0] = true;
 		}
-		Arrays.stream(us.split("\n")).forEach(line->sender.sendMessage(Messages.getPrefix(color[0])+String.format(line,label)));
+		Arrays.stream(us.split("\n")).forEach(line->sender.sendMessage(Messages.getInstance().getPrefix(color[0])+String.format(line,label)));
 	}
 
 	
@@ -48,19 +48,19 @@ public class GetHomeExecutor implements CommandExecutor {
 			try {
 				OfflinePlayer player = (OfflinePlayer) sender;
 				int number = args.length==1?Integer.valueOf(args[0]):1;
-				sender.sendMessage(Messages.getGetHomeCmdSuccess4Self(number, player.getName(), getHome(player, number)));
+				sender.sendMessage(Messages.getInstance().getGetHomeCmdSuccess4Self(number, player.getName(), getHome(player, number)));
 			} catch (NumberFormatException e) {
-				sender.sendMessage(Messages.getHomeNumberNoNumber(true));
+				sender.sendMessage(Messages.getInstance().getHomeNumberNoNumber(true));
 				printUsage(sender, label);
 			} catch (NoHomeFoundException e) {
-				sender.sendMessage(Messages.getGetHomeCmdNoHomeFound4Self());
+				sender.sendMessage(Messages.getInstance().getGetHomeCmdNoHomeFound4Self());
 			} catch (HomeNumberOutOfBoundsException e) {
-				sender.sendMessage(Messages.getHomeNumberOutOfBounds(true));
+				sender.sendMessage(Messages.getInstance().getHomeNumberOutOfBounds(true));
 			}
 			return true;
 		} else {
 			if(args.length<1){
-				sender.sendMessage(String.format(Messages.getGetHomeCmdMissingPlayer(false), label));
+				sender.sendMessage(String.format(Messages.getInstance().getGetHomeCmdMissingPlayer(false), label));
 				printUsage(sender, label);
 				return true;
 			} else if(args.length>2){
@@ -70,18 +70,18 @@ public class GetHomeExecutor implements CommandExecutor {
 			
 			OfflinePlayer player;
 			if((player=plugin.getServer().getOfflinePlayer(args[0]))==null){
-				sender.sendMessage(Messages.getGetHomeCmdPlayerNotFound(false));
+				sender.sendMessage(Messages.getInstance().getGetHomeCmdPlayerNotFound(false));
 			}else{
 				try {
 					int number = args.length==2?Integer.valueOf(args[1]):1;
-					sender.sendMessage(Messages.getGetHomeCmdSuccess4Other(number, player.getName(), getHome(player, number), false));
+					sender.sendMessage(Messages.getInstance().getGetHomeCmdSuccess4Other(number, player.getName(), getHome(player, number), false));
 				} catch (NumberFormatException e) {
-					sender.sendMessage(Messages.getHomeNumberNoNumber(false));
+					sender.sendMessage(Messages.getInstance().getHomeNumberNoNumber(false));
 					printUsage(sender, label);
 				} catch (NoHomeFoundException e) {
-					sender.sendMessage(Messages.getGetHomeCmdNoHomeFound4Other(false));
+					sender.sendMessage(Messages.getInstance().getGetHomeCmdNoHomeFound4Other(false));
 				} catch (HomeNumberOutOfBoundsException e) {
-					sender.sendMessage(Messages.getHomeNumberOutOfBounds(false));
+					sender.sendMessage(Messages.getInstance().getHomeNumberOutOfBounds(false));
 				}
 			}
 			return true;
@@ -89,7 +89,7 @@ public class GetHomeExecutor implements CommandExecutor {
 	}
 	
 	public static Location getHome(Home homePlugin, OfflinePlayer player, int number) throws NoHomeFoundException, HomeNumberOutOfBoundsException{
-		if(number > Home.getMaxHomes() || number <= 0) throw new HomeNumberOutOfBoundsException();
+		if(number > homePlugin.getMaxHomes() || number <= 0) throw new HomeNumberOutOfBoundsException();
 		
 		ConfigurationSection home=null;
 		if((home=homePlugin.homeData.getConfigurationSection(String.format(Home.homePath,player.getUniqueId(), number)))==null){

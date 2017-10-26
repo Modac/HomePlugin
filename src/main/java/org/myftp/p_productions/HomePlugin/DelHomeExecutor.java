@@ -33,7 +33,7 @@ public class DelHomeExecutor implements CommandExecutor {
 			us = usage;
 			color[0] = true;
 		}
-		Arrays.stream(us.split("\n")).forEach(line->sender.sendMessage(Messages.getPrefix(color[0])+String.format(line,label)));
+		Arrays.stream(us.split("\n")).forEach(line->sender.sendMessage(Messages.getInstance().getPrefix(color[0])+String.format(line,label)));
 	}
 
 
@@ -49,24 +49,24 @@ public class DelHomeExecutor implements CommandExecutor {
 				OfflinePlayer player = (OfflinePlayer) sender;
 				int number = args.length==1?Integer.valueOf(args[0]):1;
 				if(delHome(this.plugin, player, number)){
-					sender.sendMessage(Messages.getDelhomeCmdSuccess4Self(number, true));
+					sender.sendMessage(Messages.getInstance().getDelhomeCmdSuccess4Self(number, true));
 				} else {
 					// TODO: there was no home to remove
 				}
 			} catch (NumberFormatException e) {
-				sender.sendMessage(Messages.getHomeNumberNoNumber(true));
+				sender.sendMessage(Messages.getInstance().getHomeNumberNoNumber(true));
 				printUsage(sender, label);
 			} catch (NoHomeFoundException e) {
-				sender.sendMessage(Messages.getGetHomeCmdNoHomeFound4Self());
+				sender.sendMessage(Messages.getInstance().getGetHomeCmdNoHomeFound4Self());
 			} catch (HomeNumberOutOfBoundsException e) {
-				sender.sendMessage(Messages.getHomeNumberOutOfBounds(true));
+				sender.sendMessage(Messages.getInstance().getHomeNumberOutOfBounds(true));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			return true;
 		} else {
 			if(args.length<1){
-				sender.sendMessage(String.format(Messages.getGetHomeCmdMissingPlayer(false), label));
+				sender.sendMessage(String.format(Messages.getInstance().getGetHomeCmdMissingPlayer(false), label));
 				printUsage(sender, label);
 				return true;
 			} else if(args.length>2){
@@ -76,22 +76,22 @@ public class DelHomeExecutor implements CommandExecutor {
 
 			OfflinePlayer player;
 			if((player=plugin.getServer().getOfflinePlayer(args[0]))==null){
-				sender.sendMessage(Messages.getGetHomeCmdPlayerNotFound(false));
+				sender.sendMessage(Messages.getInstance().getGetHomeCmdPlayerNotFound(false));
 			}else{
 				try {
 					int number = args.length==2?Integer.valueOf(args[1]):1;
 					if(delHome(this.plugin, player, number)){
-						sender.sendMessage(Messages.getDelhomeCmdSuccess4Other(number, player.getName(), false));
+						sender.sendMessage(Messages.getInstance().getDelhomeCmdSuccess4Other(number, player.getName(), false));
 					} else {
 						// TODO: there was no home to remove
 					}
 				} catch (NumberFormatException e) {
-					sender.sendMessage(Messages.getHomeNumberNoNumber(false));
+					sender.sendMessage(Messages.getInstance().getHomeNumberNoNumber(false));
 					printUsage(sender, label);
 				} catch (NoHomeFoundException e) {
-					sender.sendMessage(Messages.getGetHomeCmdNoHomeFound4Other(false));
+					sender.sendMessage(Messages.getInstance().getGetHomeCmdNoHomeFound4Other(false));
 				} catch (HomeNumberOutOfBoundsException e) {
-					sender.sendMessage(Messages.getHomeNumberOutOfBounds(false));
+					sender.sendMessage(Messages.getInstance().getHomeNumberOutOfBounds(false));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

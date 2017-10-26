@@ -174,3 +174,7 @@ def hasArtifact(groupId, artifactId, version) {
 }
 
 // END Building Spigot and Bukkit
+
+task cleanConfigFile() << {
+    new File("testServer/plugins/HomePlugin/config.yml").delete();
+}
