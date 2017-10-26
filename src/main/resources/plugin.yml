@@ -1,0 +1,53 @@
+name: HomePlugin
+description: A Plugin to set and teleport to homes
+main: org.myftp.p_productions.HomePlugin.Home
+version: @versionMajor@_@versionRevision@-@apiversion@
+authors: [Pascal Goldbrunner]
+website: https://github.com/Modac/HomePlugin
+commands:
+  sethome:
+    description: Set your home
+    usage: /<command> [homeNumber]
+  home:
+    description: Teleport home
+    usage: /<command> [homeNumber]
+  gethome:
+    description: Get home
+    usage: /<command> [homeNumber]
+  gethomes:
+    description: List all Homes
+    usage: /<command>
+  delhome:
+    description: Delete a home
+    usage: /<command> [homeNumber]
+
+
+permissions:
+  homeplugin.*:
+    description: Gives access to all Home Plugin commands
+    children:
+      homeplugin.sethome: true
+      homeplugin.home: true
+      homeplugin.gethome: true
+      homeplugin.gethomes: true
+      homeplugin.delhome: true
+      homeplugin.instant: true
+    default: op
+  homeplugin.sethome:
+    description: Allows to set your home
+    default: true
+  homeplugin.home:
+    description: Allows to teleport home
+    default: true
+  homeplugin.gethome:
+    description: Allows to get your home
+    default: true
+  homeplugin.gethomes:
+    description: Allows to list your homes
+    default: true
+  homeplugin.delhome:
+    description: Allows to delete your home
+    default: true
+  homeplugin.instant:
+    description: Allows to teleport home
+    default: op
