@@ -23,7 +23,9 @@ public class Home extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
-		
+
+		saveDefaultConfig();
+
 		getCommand("sethome").setExecutor(new SetHomeExecutor(this));
 		getCommand("home").setExecutor(new GoHomeExecutor(this));
 		getCommand("gethome").setExecutor(new GetHomeExecutor(this));
@@ -38,6 +40,8 @@ public class Home extends JavaPlugin {
 	public void onDisable() {
 		
 		getLogger().info(Messages.getPluginDeactivated(false));
+
+		saveConfig();
 	}
 	
 	public static int getMaxHomes(){
