@@ -9,64 +9,48 @@ import org.myftp.p_productions.HomePlugin.SimpleConfig.SimpleConfig;
 import org.myftp.p_productions.HomePlugin.SimpleConfig.SimpleConfigManager;
 
 public class Home extends JavaPlugin {
-	
-	private static String filename="homes.yml";
-	static String lastNamePath="%s.LastName";
-	static String homePath="%s.Home%d";
-	int maxHomes;
 
-	public SimpleConfigManager manager;
-	public SimpleConfig config;
+    private static String filename = "homes.yml";
+    static String lastNamePath = "%s.LastName";
+    static String homePath = "%s.Home%d";
 
-	FileConfiguration homeData;
-	File dataFile;
-	
-	public Home() {
-		dataFile=new File(getDataFolder(), filename);
-		homeData = YamlConfiguration.loadConfiguration(dataFile);
-	}
-	
-	@Override
-	public void onEnable() {
+    FileConfiguration homeData;
+    File dataFile;
 
-		Messages.getInstance().init(this);
+    Configuration config;
 
-		initDefaultConfig();
-		loadConfig();
+    public Home() {
+        dataFile = new File(getDataFolder(), filename);
+        homeData = YamlConfiguration.loadConfiguration(dataFile);
+    }
 
-		getCommand("sethome").setExecutor(new SetHomeExecutor(this));
-		getCommand("home").setExecutor(new GoHomeExecutor(this));
-		getCommand("gethome").setExecutor(new GetHomeExecutor(this));
-		getCommand("gethomes").setExecutor(new GetHomesExecutor(this));
-		getCommand("delhome").setExecutor(new DelHomeExecutor(this));
+    @Override
+    public void onEnable() {
+
+        Messages.init(this);
+
+        config = new Configuration(this);
+        config.initConfig();
+
+        getCommand("sethome").setExecutor(new SetHomeExecutor(this));
+        getCommand("home").setExecutor(new GoHomeExecutor(this));
+        getCommand("gethome").setExecutor(new GetHomeExecutor(this));
+        getCommand("gethomes").setExecutor(new GetHomesExecutor(this));
+        getCommand("delhome").setExecutor(new DelHomeExecutor(this));
 
 
-		getLogger().info(Messages.getInstance().getPluginActivated(false));
-	}
+        getLogger().info(Messages.getInstance().getPluginActivated(false));
+    }
 
-	private void initDefaultConfig() {
+    public Configuration getHomeConfig() {
+        return this.config;
+    }
 
-		this.manager = new SimpleConfigManager(this);
-		this.manager.prepareFile("config.yml", "config.yml");
-		this.config = manager.getNewConfig("config.yml");
-		this.config.saveConfig();
+    @Override
+    public void onDisable() {
 
-	}
+        getLogger().info(Messages.getInstance().getPluginDeactivated(false));
 
-	private void loadConfig() {
-		maxHomes = this.config.getInt("maxHomes");
-
-	}
-
-	@Override
-	public void onDisable() {
-		
-		getLogger().info(Messages.getInstance().getPluginDeactivated(false));
-
-		this.config.saveConfig();
-	}
-	
-	public int getMaxHomes(){
-		return maxHomes;
-	}
+        this.config.saveConfig();
+    }
 }

@@ -6,3 +6,5 @@
 # Maximum number of homes (3)
 maxHomes: 3
 
+# Do OPs teleport instantly (true)
+opInstantTeleport: true

@@ -144,7 +144,7 @@ public class Messages {
 	private final String HOMENUMBEROUTOFBOUNDS_EN = "The specified home nummber is too large oder to small. Max: %s";
 	
 	String getHomeNumberOutOfBounds(boolean color){
-		return getPrefix(color)+String.format(HOMENUMBEROUTOFBOUNDS_DE, plugin.maxHomes);
+		return getPrefix(color)+String.format(HOMENUMBEROUTOFBOUNDS_DE, plugin.getHomeConfig().getMaxHomes());
 	}
 	
 	private final String HOMENUMBERNONUMBER_DE = "Die angegebene Home Nummer ist keine Nummer."; 
@@ -157,14 +157,50 @@ public class Messages {
 	private final String DELHOME_CMD_SUCCESS_4OTHER_DE = "Das %d. Zuhause von %s wurde entfernt.";
 	private final String DELHOME_CMD_SUCCESS_4OTHER_EN = "%s's %d. home was removed.";
 
-	String getDelhomeCmdSuccess4Other(int homeNumber, String playerName, boolean color){
+	String getDelHomeCmdSuccess4Other(int homeNumber, String playerName, boolean color){
 		return getPrefix(color)+String.format(DELHOME_CMD_SUCCESS_4OTHER_DE, homeNumber, playerName);
 	}
 
 	private final String DELHOME_CMD_SUCCESS_4SELF_DE = "Dein %d. Zuhause wurde entfernt.";
 	private final String DELHOME_CMD_SUCCESS_4SELF_EN = "Your %d. home was removed.";
 
-	String getDelhomeCmdSuccess4Self(int homeNumber, boolean color){
+	String getDelHomeCmdSuccess4Self(int homeNumber, boolean color){
 		return getPrefix(color)+String.format(DELHOME_CMD_SUCCESS_4SELF_DE, homeNumber);
+	}
+
+	private final String DELHOME_CMD_NO_HOME_4OTHER_DE = "Das %d. Zuhause von %s ist nicht gesetzt.";
+	private final String DELHOME_CMD_NO_HOME_4OTHER_EN = "%s's %d. home is'nt set.";
+
+	String getDelHomeCmdNoHome4Other(int homeNumber, String playerName, boolean color) {
+		return getPrefix(color)+String.format(DELHOME_CMD_NO_HOME_4OTHER_DE, homeNumber, playerName);
+	}
+
+	private final String DELHOME_CMD_NO_HOME_4SELF_DE = "Dein %d. Zuhause ist nicht gesetzt.";
+	private final String DELHOME_CMD_NO_HOME_4SELF_EN = "Your %d. home is'nt set.";
+
+	String getDelHomeCmdNoHome4Self(int homeNumber, boolean color) {
+		return getPrefix(color)+String.format(DELHOME_CMD_NO_HOME_4OTHER_DE, homeNumber);
+	}
+
+	private final String GOHOME_CMD_INSTANT_DE = "Nach Hause telefonieren";
+	private final String GOHOME_CMD_INSTANT_EN = "Phone home";
+
+	String getGoHomeCmdInstant(boolean color) {
+		return getPrefix(color)+GOHOME_CMD_INSTANT_DE;
+	}
+
+	private final String GOHOME_CMD_START_DE = "Teleportiere zu deinem %d. Zuhause";
+	private final String GOHOME_CMD_START_EN = "Teleport to your %d. home";
+
+	String getGoHomeCmdStart(boolean color) {
+		return getPrefix(color)+GOHOME_CMD_START_DE;
+	}
+
+
+	private final String GOHOME_CMD_NOT_ONLINE_DE = "Du bist nicht online?";
+	private final String GOHOME_CMD_NOT_ONLINE_EN = "You're not online?";
+
+	String getGoHomeCmdNotOnline(boolean color) {
+		return getPrefix(color)+GOHOME_CMD_NOT_ONLINE_DE;
 	}
 }

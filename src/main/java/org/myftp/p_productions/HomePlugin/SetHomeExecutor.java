@@ -55,7 +55,7 @@ public class SetHomeExecutor implements CommandExecutor {
 	}
 	
 	public Location setHome(Player player, int number) throws IOException, HomeNumberOutOfBoundsException{
-		if(number > plugin.getMaxHomes() || number <= 0) throw new HomeNumberOutOfBoundsException();
+		if(number > plugin.getHomeConfig().getMaxHomes() || number <= 0) throw new HomeNumberOutOfBoundsException();
 		
 		plugin.homeData.set(String.format(Home.lastNamePath,player.getUniqueId()), player.getName());
 		

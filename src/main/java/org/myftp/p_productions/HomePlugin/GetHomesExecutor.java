@@ -44,7 +44,7 @@ public class GetHomesExecutor implements CommandExecutor {
 			try {
 				OfflinePlayer player = (OfflinePlayer) sender;
 				int setHomes=0;
-				for (int i=1; i<=plugin.getMaxHomes(); i++) {
+				for (int i=1; i<=plugin.getHomeConfig().getMaxHomes(); i++) {
 					try {
 						sender.sendMessage(Messages.getInstance().getGetHomeCmdSuccess4Self(i, player.getName(), getHome(player, i)));
 						setHomes++;
@@ -72,7 +72,7 @@ public class GetHomesExecutor implements CommandExecutor {
 			}else{
 				try {
 					int setHomes=0;
-					for (int i=1; i<=plugin.getMaxHomes(); i++) {
+					for (int i=1; i<=plugin.getHomeConfig().getMaxHomes(); i++) {
 						try {
 							sender.sendMessage(Messages.getInstance().getGetHomeCmdSuccess4Other(i, player.getName(), getHome(player, i), false));
 							setHomes++;

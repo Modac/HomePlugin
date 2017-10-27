@@ -62,57 +62,25 @@ public class GoHomeExecutor implements CommandExecutor {
 		} catch (HomeNumberOutOfBoundsException e) {
 			return Messages.getInstance().getHomeNumberOutOfBounds(true);
 		}
-		
-		// TODO: move to Messages
-		
+
+
 		if(player.isOnline()){
-			if(((Player) player).hasPermission("homeplugin.instant")) {
+			// If player has instant teleport permission or if ops can teleport instantly and player is op
+			if(((Player) player).hasPermission("homeplugin.instant")
+					|| (plugin.getHomeConfig().isOpInstantTeleport() && ((Player) player).isOp())) {
+
 				((Player) player).teleport(loc);
-				return ChatColor.AQUA + "Nach Hause telefonieren";
+				return Messages.getInstance().getGoHomeCmdInstant(true);
 			} else {
 				GoHomeTask.start(plugin, (Player) player, loc);
-				return ChatColor.AQUA+"Teleportiere zu deinem " + number + ". Zuhause";
+				return Messages.getInstance().getGoHomeCmdStart(true);
 			}
 		}
 		else
-			return "You're not online?";
+			return Messages.getInstance().getGoHomeCmdNotOnline(true);
 		/*} catch(Exception e){
 			e.printStackTrace();
 			return "Failed to retrieve "+(playerSend?"youre":"the player's")+" home.";
 		}*/
 	}
-	
-	/*
-	@Deprecated
-	private String goHomeOld(OfflinePlayer player, boolean playerSend){
-		String home=null;
-		if((home=plugin.homeData.getString(String.format(Home.homePath,player.getUniqueId())))==null){
-			return("I found no home for "+(playerSend?"you.":"that player."));
-		}
-		try{
-			
-			// TODO: Add yaw 'n pitch
-			
-			String[] homeParts=home.split(";");
-			// DEBUG
-			// plugin.getServer().broadcastMessage(Arrays.toString(homeParts));
-			// DEBUG
-			Location loc=new Location(plugin.getServer().getWorld(homeParts[3]), Double.valueOf(homeParts[0]), Double.valueOf(homeParts[1]), Double.valueOf(homeParts[2]));
-			if(playerSend){
-				if(player.isOnline()){
-					GoHomeTask.start(plugin, (Player) player, loc);
-					return ChatColor.AQUA+"Teleporting in "+ChatColor.GREEN+"3"+ChatColor.AQUA+" seconds.";
-				}
-				else
-					return "You're not online?";
-			} else{
-				return String.format("Home of %s: %2$.2f; %3$.2f; %4$.2f in %5$s", player.getName(), loc.getX(), loc.getY(), loc.getZ(), loc.getWorld().getName());
-			}
-		} catch(Exception e){
-			e.printStackTrace();
-			return "Failed to retrieve "+(playerSend?"youre":"the player's")+" home.";
-		}
-	}
-	*/
-
 }

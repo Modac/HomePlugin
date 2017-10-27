@@ -89,7 +89,7 @@ public class GetHomeExecutor implements CommandExecutor {
 	}
 	
 	public static Location getHome(Home homePlugin, OfflinePlayer player, int number) throws NoHomeFoundException, HomeNumberOutOfBoundsException{
-		if(number > homePlugin.getMaxHomes() || number <= 0) throw new HomeNumberOutOfBoundsException();
+		if(number > homePlugin.getHomeConfig().getMaxHomes() || number <= 0) throw new HomeNumberOutOfBoundsException();
 		
 		ConfigurationSection home=null;
 		if((home=homePlugin.homeData.getConfigurationSection(String.format(Home.homePath,player.getUniqueId(), number)))==null){

@@ -31,7 +31,6 @@ permissions:
       homeplugin.gethome: true
       homeplugin.gethomes: true
       homeplugin.delhome: true
-      homeplugin.instant: true
     default: op
   homeplugin.sethome:
     description: Allows to set your home
@@ -50,4 +49,4 @@ permissions:
     default: true
   homeplugin.instant:
     description: Allows to teleport home
-    default: op
+    default: false

@@ -1,6 +1,5 @@
 package org.myftp.p_productions.HomePlugin;
 
-import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -49,9 +48,9 @@ public class DelHomeExecutor implements CommandExecutor {
 				OfflinePlayer player = (OfflinePlayer) sender;
 				int number = args.length==1?Integer.valueOf(args[0]):1;
 				if(delHome(this.plugin, player, number)){
-					sender.sendMessage(Messages.getInstance().getDelhomeCmdSuccess4Self(number, true));
+					sender.sendMessage(Messages.getInstance().getDelHomeCmdSuccess4Self(number, true));
 				} else {
-					// TODO: there was no home to remove
+					sender.sendMessage(Messages.getInstance().getDelHomeCmdNoHome4Self(number, true));
 				}
 			} catch (NumberFormatException e) {
 				sender.sendMessage(Messages.getInstance().getHomeNumberNoNumber(true));
@@ -81,9 +80,9 @@ public class DelHomeExecutor implements CommandExecutor {
 				try {
 					int number = args.length==2?Integer.valueOf(args[1]):1;
 					if(delHome(this.plugin, player, number)){
-						sender.sendMessage(Messages.getInstance().getDelhomeCmdSuccess4Other(number, player.getName(), false));
+						sender.sendMessage(Messages.getInstance().getDelHomeCmdSuccess4Other(number, player.getName(), false));
 					} else {
-						// TODO: there was no home to remove
+						sender.sendMessage(Messages.getInstance().getDelHomeCmdNoHome4Other(number, player.getName(), false));
 					}
 				} catch (NumberFormatException e) {
 					sender.sendMessage(Messages.getInstance().getHomeNumberNoNumber(false));
@@ -103,7 +102,9 @@ public class DelHomeExecutor implements CommandExecutor {
 
 	private boolean delHome(Home homeplugin, OfflinePlayer player, int number) throws NoHomeFoundException, HomeNumberOutOfBoundsException, IOException {
 
-		homeplugin.homeData.set(String.format(Home.homePath,player.getUniqueId(), number), null);
+		String path = String.format(Home.homePath, player.getUniqueId(), number);
+		if (!homeplugin.homeData.isSet(path)) return false;
+		homeplugin.homeData.set(path, null);
 
 		plugin.homeData.save(plugin.dataFile);
 		return true;
