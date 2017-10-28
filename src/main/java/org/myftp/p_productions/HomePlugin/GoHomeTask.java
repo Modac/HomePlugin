@@ -10,6 +10,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
+import org.myftp.p_productions.HomePlugin.particleEffects.ParticleEffectManager;
 
 public class GoHomeTask extends BukkitRunnable {
 
@@ -19,13 +20,17 @@ public class GoHomeTask extends BukkitRunnable {
     private Location loc;
     private DontMoveListener listener;
     private int count;
+    private Home plugin;
+    private ParticleEffectManager pem;
 
-    public GoHomeTask(JavaPlugin plugin, Player player, Location loc) {
+    public GoHomeTask(Home plugin, Player player, Location loc) {
         this.player = player;
         this.loc = loc;
         this.listener = new DontMoveListener(player, this);
+        this.plugin = plugin;
         plugin.getServer().getPluginManager().registerEvents(listener, plugin);
         count = maxCount;
+        pem = new ParticleEffectManager(plugin, player, player.getLocation(), loc);
     }
 
     @Override
@@ -37,17 +42,20 @@ public class GoHomeTask extends BukkitRunnable {
             player.teleport(loc);
             PlayerMoveEvent.getHandlerList().unregister(listener);
             player.sendTitle(" ",  "", 0, 1, 0);
-            player.getWorld().spawnParticle(Particle.CLOUD, player.getLocation(), 100, 0.5, 1, 0.5, 0);
             this.cancel();
         } else {
             player.sendTitle(null, ChatColor.AQUA + "Teleportiere in " +
-                            ChatColor.GREEN + count-- +
-                            ChatColor.AQUA + " Sekunde" + (count == 0 ? "" : "n"),
+                            ChatColor.GREEN + count +
+                            ChatColor.AQUA + " Sekunde" + (count == 1 ? "" : "n"),
                     0, 70, 20);
         }
+
+        pem.notifyParticleEffects(count);
+
+        count--;
     }
 
-    public static BukkitTask start(JavaPlugin plugin, Player player, Location loc) {
+    public static BukkitTask start(Home plugin, Player player, Location loc) {
         player.sendTitle(ChatColor.GOLD + "Nicht bewegen", "", 10, 70, 20);
         return new GoHomeTask(plugin, player, loc).runTaskTimer(plugin, 0, period);
     }
@@ -58,7 +66,7 @@ public class GoHomeTask extends BukkitRunnable {
         BukkitRunnable task;
         Location origLoc;
 
-        public DontMoveListener(Player player, BukkitRunnable task) {
+        DontMoveListener(Player player, BukkitRunnable task) {
             this.player = player;
             this.task = task;
             origLoc = player.getLocation();
@@ -74,7 +82,7 @@ public class GoHomeTask extends BukkitRunnable {
         }
 
         private boolean didMove(Location to) {
-            return origLoc.distanceSquared(to) >= 2.25;
+            return origLoc.distanceSquared(to) >= plugin.getHomeConfig().getMaxMoveDist()*plugin.getHomeConfig().getMaxMoveDist();
         }
     }
 

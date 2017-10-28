@@ -179,7 +179,7 @@ public class Messages {
 	private final String DELHOME_CMD_NO_HOME_4SELF_EN = "Your %d. home is'nt set.";
 
 	String getDelHomeCmdNoHome4Self(int homeNumber, boolean color) {
-		return getPrefix(color)+String.format(DELHOME_CMD_NO_HOME_4OTHER_DE, homeNumber);
+		return getPrefix(color)+String.format(DELHOME_CMD_NO_HOME_4SELF_DE, homeNumber);
 	}
 
 	private final String GOHOME_CMD_INSTANT_DE = "Nach Hause telefonieren";
@@ -192,8 +192,8 @@ public class Messages {
 	private final String GOHOME_CMD_START_DE = "Teleportiere zu deinem %d. Zuhause";
 	private final String GOHOME_CMD_START_EN = "Teleport to your %d. home";
 
-	String getGoHomeCmdStart(boolean color) {
-		return getPrefix(color)+GOHOME_CMD_START_DE;
+	String getGoHomeCmdStart(int homeNumber, boolean color) {
+		return getPrefix(color)+String.format(GOHOME_CMD_START_DE, homeNumber);
 	}
 
 

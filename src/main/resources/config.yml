@@ -3,8 +3,41 @@
 # <                   Configuration                    >
 # +----------------------------------------------------+
 
-# Maximum number of homes (3)
+# Maximum number of homes
+# 3
 maxHomes: 3
 
-# Do OPs teleport instantly (true)
+# Do OPs teleport instantly
+# true, false
+# true
 opInstantTeleport: true
+
+# Maximum distance a player can move without aborting the teleport
+# 0.5
+maxMoveDist: 0.5
+
+# Create a effect while being teleported at the source location
+# ender, cage, spiral, none
+# spiral
+sourceParticleWhile: ender
+
+# Create a effect while being teleported at the target location
+# ender, cage, spiral, none
+# spiral
+targetParticleWhile: ender
+
+# Do the particles follow the player while being teleported
+# true, false
+# false
+particleFollow: false
+
+# Create a effect after being teleported at the source location
+# explosion, cloud, none
+# cloud
+sourceParticleAfter: cloud
+
+# Create a effect after being teleported at the target location
+# explosion, cloud, none
+# cloud
+targetParticleAfter: cloud
+

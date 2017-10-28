@@ -14,13 +14,13 @@ import org.myftp.p_productions.HomePlugin.exceptions.NoHomeFoundException;
 
 public class GoHomeExecutor implements CommandExecutor {
 
-	Home plugin;
+	private Home plugin;
 	
 	public GoHomeExecutor(Home home) {
 		plugin=home;
 	}
 
-	private static String usage="Teleport home:\n"
+	private static final String usage="Teleport home:\n"
 			  				  + "  /%s [homeNumber]\n";
 
 	private static void printUsage(CommandSender sender, String label){
@@ -67,20 +67,16 @@ public class GoHomeExecutor implements CommandExecutor {
 		if(player.isOnline()){
 			// If player has instant teleport permission or if ops can teleport instantly and player is op
 			if(((Player) player).hasPermission("homeplugin.instant")
-					|| (plugin.getHomeConfig().isOpInstantTeleport() && ((Player) player).isOp())) {
+					|| (plugin.getHomeConfig().isOpInstantTeleport() && player.isOp())) {
 
 				((Player) player).teleport(loc);
 				return Messages.getInstance().getGoHomeCmdInstant(true);
 			} else {
 				GoHomeTask.start(plugin, (Player) player, loc);
-				return Messages.getInstance().getGoHomeCmdStart(true);
+				return Messages.getInstance().getGoHomeCmdStart(number, true);
 			}
 		}
 		else
 			return Messages.getInstance().getGoHomeCmdNotOnline(true);
-		/*} catch(Exception e){
-			e.printStackTrace();
-			return "Failed to retrieve "+(playerSend?"youre":"the player's")+" home.";
-		}*/
 	}
 }
