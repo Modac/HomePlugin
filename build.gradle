@@ -22,6 +22,8 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'idea-utils'
 
+compileJava.options.encoding = 'UTF-8'
+
 idea {
     project {
         ipr {
@@ -140,8 +142,8 @@ task setupWorkspace(dependsOn: ['buildSpigot']) {
 
 task buildSpigot(type: JavaExec) {
     if (hasSpigot()) {
-        enabled = false;
-        dependsOn = [];
+        enabled = false
+        dependsOn = []
     } else {
         dependsOn = ['cleanSpigotBuild', 'downloadBuildTool']
     }
@@ -175,5 +177,5 @@ def hasArtifact(groupId, artifactId, version) {
 // END Building Spigot and Bukkit
 
 task cleanConfigFile() << {
-    new File("testServer/plugins/HomePlugin/config.yml").delete();
+    new File("testServer/plugins/HomePlugin/config.yml").delete()
 }

@@ -3,8 +3,10 @@ package org.myftp.p_productions.HomePlugin.particleEffects;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.myftp.p_productions.HomePlugin.Home;
+import org.myftp.p_productions.HomePlugin.particleEffects.whileTeleport.Cage;
+import org.myftp.p_productions.HomePlugin.particleEffects.whileTeleport.ConstantSpiral;
 import org.myftp.p_productions.HomePlugin.particleEffects.whileTeleport.Ender;
-import org.myftp.p_productions.HomePlugin.particleEffects.whileTeleport.Spiral;
+import org.myftp.p_productions.HomePlugin.particleEffects.whileTeleport.ProgressiveSpiral;
 
 public class ParticleEffectManager {
 
@@ -28,28 +30,24 @@ public class ParticleEffectManager {
     }
 
     private void initParticleEffects() {
-        plugin.getLogger().info("init");
-        switch(plugin.getHomeConfig().getSourceParticleWhile().toLowerCase()) {
-            case "ender":
-                sourceWhile = new Ender(plugin, player, sourceLoc, true);
-                break;
-            case "spiral":
-                plugin.getLogger().info("Spiral");
-                sourceWhile = new Spiral(plugin, player, sourceLoc, true);
-                break;
-            default:
-                sourceWhile = null;
-        }
+        sourceWhile = getParticleEffectWhile(plugin.getHomeConfig().getSourceParticleWhile().toLowerCase(), true);
+        targetWhile = getParticleEffectWhile(plugin.getHomeConfig().getTargetParticleWhile().toLowerCase(), false);
 
-        switch(plugin.getHomeConfig().getTargetParticleWhile().toLowerCase()) {
+        // TODO: add After teleport effects
+    }
+
+    private ParticleEffect getParticleEffectWhile(String particleEffectWhile, boolean atSource) {
+        switch(particleEffectWhile) {
             case "ender":
-                targetWhile = new Ender(plugin, player, targetLoc, false);
-                break;
-            case "spiral":
-                targetWhile = new Spiral(plugin, player, targetLoc, false);
-                break;
+                return new Ender(plugin, player, atSource?sourceLoc:targetLoc, atSource);
+            case "constantspiral":
+                return new ConstantSpiral(plugin, player, atSource?sourceLoc:targetLoc, atSource);
+            case "progressivespiral":
+                return new ProgressiveSpiral(plugin, player, atSource?sourceLoc:targetLoc, atSource);
+            case "cage":
+                return new Cage(plugin, player, atSource?sourceLoc:targetLoc, atSource);
             default:
-                targetWhile = null;
+                return null;
         }
     }
 
@@ -60,24 +58,27 @@ public class ParticleEffectManager {
         if(targetWhile!=null) notifyParticleEffectTargetWhile(count);
     }
 
-    void notifyParticleEffectTargetAfter(int count){
+    private void notifyParticleEffectTargetAfter(int count){
 
     }
 
-    void notifyParticleEffectSourceWhile(int count){
+    private void notifyParticleEffectSourceWhile(int count){
         sourceWhile.notifyParticleEffect(count);
     }
 
-    void notifyParticleEffectSourceAfter(int count){
+    private void notifyParticleEffectSourceAfter(int count){
 
     }
 
-    void notifyParticleEffectTargetWhile(int count){
+    private void notifyParticleEffectTargetWhile(int count){
         targetWhile.notifyParticleEffect(count);
     }
 
-    void abortParticleEffects(int count){
-
+    public void abortParticleEffects(){
+        if(sourceAfter!=null) sourceAfter.abortParticleEffect();
+        if(sourceWhile!=null) sourceWhile.abortParticleEffect();
+        if(targetAfter!=null) targetAfter.abortParticleEffect();
+        if(targetWhile!=null) targetWhile.abortParticleEffect();
     }
 
 

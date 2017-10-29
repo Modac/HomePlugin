@@ -2,12 +2,10 @@ package org.myftp.p_productions.HomePlugin;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.myftp.p_productions.HomePlugin.particleEffects.ParticleEffectManager;
@@ -42,6 +40,7 @@ public class GoHomeTask extends BukkitRunnable {
             player.teleport(loc);
             PlayerMoveEvent.getHandlerList().unregister(listener);
             player.sendTitle(" ",  "", 0, 1, 0);
+            pem.abortParticleEffects();
             this.cancel();
         } else {
             player.sendTitle(null, ChatColor.AQUA + "Teleportiere in " +
@@ -74,14 +73,15 @@ public class GoHomeTask extends BukkitRunnable {
 
         @EventHandler
         public void onPlayerMove(PlayerMoveEvent event) {
-            if (event.getPlayer().getUniqueId().equals(player.getUniqueId()) && didMove(event.getTo())) {
+            if (event.getPlayer().getUniqueId().equals(player.getUniqueId()) && didMoveTooMuch(event.getTo())) {
                 PlayerMoveEvent.getHandlerList().unregister(this);
                 player.sendTitle(ChatColor.RED + "Teleport abgebrochen", "", 0, 70, 20);
+                pem.abortParticleEffects();
                 task.cancel();
             }
         }
 
-        private boolean didMove(Location to) {
+        private boolean didMoveTooMuch(Location to) {
             return origLoc.distanceSquared(to) >= plugin.getHomeConfig().getMaxMoveDist()*plugin.getHomeConfig().getMaxMoveDist();
         }
     }

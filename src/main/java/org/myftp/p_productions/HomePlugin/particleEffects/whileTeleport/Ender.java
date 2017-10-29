@@ -34,4 +34,9 @@ public class Ender implements ParticleEffect{
 
         }
     }
+
+    @Override
+    public void abortParticleEffect() {
+        // Cannot abort ender effect
+    }
 }

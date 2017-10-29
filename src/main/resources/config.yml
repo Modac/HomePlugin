@@ -17,14 +17,14 @@ opInstantTeleport: true
 maxMoveDist: 0.5
 
 # Create a effect while being teleported at the source location
-# ender, cage, spiral, none
-# spiral
-sourceParticleWhile: ender
+# ender, cage, constantSpiral, progressiveSpiral, none
+# constantSpiral
+sourceParticleWhile: progressiveSpiral
 
 # Create a effect while being teleported at the target location
-# ender, cage, spiral, none
-# spiral
-targetParticleWhile: ender
+# ender, cage, constantSpiral, progressiveSprial, none
+# constantSpiral
+targetParticleWhile: constantSpiral
 
 # Do the particles follow the player while being teleported
 # true, false

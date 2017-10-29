@@ -104,7 +104,7 @@ public class Messages {
 	private final String GETHOME_CMD_NOHOMEFOUND_RAW_EN = "I found no home for ";
 	private final String GETHOME_CMD_NOHOMEFOUND_4SELF_EN = GETHOME_CMD_NOHOMEFOUND_RAW_EN+"you.";
 	
-	private final String GETHOME_CMD_NOHOMEFOUND_RAW_DE = "Kein Zuhause f\u00FCr %s gefunden.";
+	private final String GETHOME_CMD_NOHOMEFOUND_RAW_DE = "Kein Zuhause für %s gefunden.";
 	private final String GETHOME_CMD_NOHOMEFOUND_4SELF_DE = String.format(GETHOME_CMD_NOHOMEFOUND_RAW_DE, "dich");
 	
 	String getGetHomeCmdNoHomeFound4Self(){
@@ -169,7 +169,7 @@ public class Messages {
 	}
 
 	private final String DELHOME_CMD_NO_HOME_4OTHER_DE = "Das %d. Zuhause von %s ist nicht gesetzt.";
-	private final String DELHOME_CMD_NO_HOME_4OTHER_EN = "%s's %d. home is'nt set.";
+	private final String DELHOME_CMD_NO_HOME_4OTHER_EN = "%s's %d. home isn't set.";
 
 	String getDelHomeCmdNoHome4Other(int homeNumber, String playerName, boolean color) {
 		return getPrefix(color)+String.format(DELHOME_CMD_NO_HOME_4OTHER_DE, homeNumber, playerName);
