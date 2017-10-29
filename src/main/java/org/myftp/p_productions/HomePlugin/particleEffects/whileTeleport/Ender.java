@@ -14,11 +14,11 @@ public class Ender implements ParticleEffect{
     private Location loc;
     private boolean isAtSource;
 
-    // TODO: Remove unnecessary fields
     public Ender(Home homePlugin, Player player, Location location, boolean isAtSource){
         this.plugin = homePlugin;
         this.player = player;
         this.loc = location;
+        this.isAtSource = isAtSource;
     }
 
     @Override
