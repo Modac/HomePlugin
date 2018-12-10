@@ -20,20 +20,28 @@ public class GetHomeExecutor implements CommandExecutor {
 		plugin=homePlugin;
 	}
 
-	private static String usage="Get homes:\n"
-			  				  + "  /%s [homeNumber]\n";
+	private static void printUsage(CommandSender sender, String label, boolean color,
+			boolean printPlayer, boolean playerOptional, boolean printNumber) {
 
-	private static String usageConsole="Get homes:\n"
-									 + "  /%s <player> [homeNumber]\n";
+		String msg = "Delete a Home:\n" +
+				"  /%s" + (printPlayer ? String.format(playerOptional ? " [%s]" : " <%s>", "player") : "")
+				+ (printNumber ? " [homeNumber]" : "");
 
-	private static void printUsage(CommandSender sender, String label){
-		String us = usageConsole;
-		boolean color[] = new boolean[]{false};
-		if(sender instanceof Player){
-			us = usage;
-			color[0] = true;
+		for (String line : msg.split("\n")) {
+			sender.sendMessage(Messages.getInstance().getPrefix(color) + String.format(line, label));
 		}
-		Arrays.stream(us.split("\n")).forEach(line->sender.sendMessage(Messages.getInstance().getPrefix(color[0])+String.format(line,label)));
+	}
+
+	private static void printUsage(CommandSender sender, String label) {
+		if (sender instanceof Player) {
+			if (((Player) sender).hasPermission("homeplugin.delhome.other")) {
+				printUsage(sender, label, true, true, true, true);
+			} else {
+				printUsage(sender, label, true, false, false, true);
+			}
+		} else {
+			printUsage(sender, label, false, true, false, true);
+		}
 	}
 
 	

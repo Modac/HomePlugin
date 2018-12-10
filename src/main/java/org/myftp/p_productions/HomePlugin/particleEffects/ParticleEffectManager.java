@@ -58,10 +58,6 @@ public class ParticleEffectManager {
         if(targetWhile!=null) notifyParticleEffectTargetWhile(count);
     }
 
-    private void notifyParticleEffectTargetAfter(int count){
-
-    }
-
     private void notifyParticleEffectSourceWhile(int count){
         sourceWhile.notifyParticleEffect(count);
     }
@@ -72,6 +68,10 @@ public class ParticleEffectManager {
 
     private void notifyParticleEffectTargetWhile(int count){
         targetWhile.notifyParticleEffect(count);
+    }
+
+    private void notifyParticleEffectTargetAfter(int count){
+
     }
 
     public void abortParticleEffects(){

@@ -27,7 +27,7 @@ public class ConstantSpiral extends RecursiveParticleEffect {
                 helixPoint.setY(2.0/3*t);
                 helixPoint.add((isAtSource && plugin.getHomeConfig().isParticleFollow())?player.getLocation():loc);
 
-                player.getWorld().spawnParticle(Particle.FLAME, helixPoint, 10, 0, 0, 0, 0);
+                player.getWorld().spawnParticle(Particle.FLAME, helixPoint, 5, 0, 0, 0, 0);
 
                 t+=randomInRange(0.05, 0.3);
                 if ((2.0/3*t)>=2) t=0;
