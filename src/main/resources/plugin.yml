@@ -7,19 +7,19 @@ website: https://github.com/Modac/HomePlugin
 commands:
   sethome:
     description: Set your home
-    usage: /<command> [homeNumber]
+    usage: /<command> [player] [homeNumber]
   home:
     description: Teleport home
-    usage: /<command> [homeNumber]
+    usage: /<command> [player] [homeNumber]
   gethome:
     description: Get home
-    usage: /<command> [homeNumber]
+    usage: /<command> [player] [homeNumber]
   gethomes:
     description: List all Homes
-    usage: /<command>
+    usage: /<command> [player]
   delhome:
     description: Delete a home
-    usage: /<command> [homeNumber]
+    usage: /<command> [player] [homeNumber]
 
 
 permissions:
@@ -27,26 +27,46 @@ permissions:
     description: Gives access to all Home Plugin commands
     children:
       homeplugin.sethome: true
+      homeplugin.sethome.other: true
       homeplugin.home: true
+      homeplugin.home.other: true
       homeplugin.gethome: true
+      homeplugin.gethome.other: true
       homeplugin.gethomes: true
+      homeplugin.gethomes.other: true
       homeplugin.delhome: true
+      homeplugin.delhome.other: true
     default: op
   homeplugin.sethome:
     description: Allows to set your home
-    default: true
+    default: false
+  homeplugin.sethome.other:
+    description: Allows to set others home
+    default: false
   homeplugin.home:
     description: Allows to teleport home
-    default: true
+    default: false
+  homeplugin.home.other:
+    description: Allows to teleport to others home
+    default: false
   homeplugin.gethome:
     description: Allows to get your home
-    default: true
+    default: false
+  homeplugin.gethome.other:
+    description: Allows to get others home
+    default: false
   homeplugin.gethomes:
     description: Allows to list your homes
-    default: true
+    default: false
+  homeplugin.gethomes.other:
+    description: Allows to list others homes
+    default: false
   homeplugin.delhome:
     description: Allows to delete your home
-    default: true
+    default: false
+  homeplugin.delhome.other:
+    description: Allows to delete others homes
+    default: false
   homeplugin.instant:
-    description: Allows to teleport home
+    description: Allows to teleport home instantly
     default: false
