@@ -66,17 +66,22 @@ public class GoHomeExecutor implements CommandExecutor {
 
 		if(player.isOnline()){
 			// If player has instant teleport permission or if ops can teleport instantly and player is op
-			if(((Player) player).hasPermission("homeplugin.instant")
-					|| (plugin.getHomeConfig().isOpInstantTeleport() && player.isOp())) {
-
-				((Player) player).teleport(loc);
+			Player oPlayer = player.getPlayer();
+			if(teleportInstant(oPlayer)) {
+				oPlayer.teleport(loc);
 				return Messages.getInstance().getGoHomeCmdInstant(true);
 			} else {
-				GoHomeTask.start(plugin, (Player) player, loc);
+				GoHomeTask.start(plugin, oPlayer, loc);
 				return Messages.getInstance().getGoHomeCmdStart(number, true);
 			}
 		}
 		else
 			return Messages.getInstance().getGoHomeCmdNotOnline(true);
+	}
+
+	private boolean teleportInstant(Player player){
+		return player.isPermissionSet("homplugin.instant")?
+						player.hasPermission("homeplugin.instant"):
+						plugin.getHomeConfig().isOpInstantTeleport() && player.isOp();
 	}
 }
