@@ -65,6 +65,13 @@ public class Messages {
 	String getLocationCoords(Location loc, boolean color){
 		return String.format(getLocationCoords(color), loc.getX(), loc.getY(), loc.getZ(), loc.getWorld().getName());
 	}
+
+	private final String NO_PERMISSION_DE = "Dafür hast du leider keine Berechtigung.";
+	private final String NO_PERMISSION_EN = "You don't have permission to do that.";
+
+	String getNoPermission() {
+		return getPrefix() + NO_PERMISSION_DE;
+	}
 	
 	private final String SETHOME_CMD_SUCCESS_DE = "Dein neues Zuhause:\n    " + LOCATION_COORDS_COLOR;
 	private final String SETHOME_CMD_SUCCESS_EN = "Your new home was set to:\n    " + LOCATION_COORDS_COLOR;
@@ -87,8 +94,8 @@ public class Messages {
 		return getPrefix(false)+SETHOME_CMD_NOPLAYERSENDER_DE;
 	}
 	
-	private final String GETHOME_CMD_MISSINGPLAYER_DE = "Keinen Spieler angegeben.\n    /%s <Spieler>";
-	private final String GETHOME_CMD_MISSINGPLAYER_EN = "I am missing a player here.\n    /%s <player>";
+	private final String GETHOME_CMD_MISSINGPLAYER_DE = "Keinen Spieler angegeben.";
+	private final String GETHOME_CMD_MISSINGPLAYER_EN = "I am missing a player here.";
 	
 	String getGetHomeCmdMissingPlayer(boolean color){
 		return getPrefix(color)+GETHOME_CMD_MISSINGPLAYER_DE;
